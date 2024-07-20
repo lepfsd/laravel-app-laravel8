@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Category;
+use App\Models\Category;
 
 class Project extends Model
 {
     use HasFactory; 
-    protected $fillable = ['title', 'url', 'description'];
+    protected $fillable = ['title', 'url', 'description', 'category_id'];
 
     public function getRouteKeyName() 
     {
@@ -18,6 +18,6 @@ class Project extends Model
 
     public function category()
     {
-        $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }

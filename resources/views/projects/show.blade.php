@@ -13,6 +13,9 @@
         @endif
         <div class="bg-white p-5 shadow-rounded">
           <h3>{{ $project->title }}</h3>
+          @if($project->category_id)
+            <a href="{{ route('categories.show', $project->category) }}" class="badge badge-secondary">{{ $project->category->name }}</a>
+          @endif
           <br>
           <p>{{ $project->description }}</p>
           <p>{{ $project->created_at->diffForHumans() }}</p>

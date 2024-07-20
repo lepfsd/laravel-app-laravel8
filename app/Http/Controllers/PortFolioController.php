@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Category;
 use App\Events\ProjectSaved;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +21,7 @@ class PortFolioController extends Controller
      */
     public function index()
     {
-        $projects = Project::latest()->paginate();
+        $projects = Project::with('category')->latest()->paginate();
         return view ('projects.index', compact('projects'));
     }
 
@@ -32,7 +33,8 @@ class PortFolioController extends Controller
     public function create()
     {
         return view('projects.create', [
-            'project' => new Project
+            'project' => new Project,
+            'categories' => Category::pluck('name', 'id')
         ]);
     }
 
@@ -48,6 +50,7 @@ class PortFolioController extends Controller
             'title' => 'required',
             'url' => ['required', 'unique:projects'],
             'description' => 'required',
+            'category_id' => ['required', 'exists:categories,id'],
             'image' => ['required', 'image']
         ]);
         
@@ -83,7 +86,8 @@ class PortFolioController extends Controller
     public function edit(Project $project)
     {
         return view('projects.edit', [
-            'project' => $project
+            'project' => $project,
+            'categories' => Category::pluck('name', 'id')
         ]);
     }
 
@@ -100,6 +104,7 @@ class PortFolioController extends Controller
             'title' => 'required',
             'url' => ['required'],
             'description' => 'required',
+            'category_id' => ['required', 'exists:categories,id'],
             'image' => ['required', 'image']
         ]);
 
@@ -113,7 +118,8 @@ class PortFolioController extends Controller
             $project->update(array_filter([
                 'title' => request('title'),
                 'url' => request('url'),
-                'description' => request('description')
+                'description' => request('description'),
+                'category_id' => request('category_id')
             ]));
         }
         
