@@ -1,0 +1,17 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.active a {
+  color: red;
+  text-decoration: none;
+}
+
+.h-screen {
+  height: 100vh;
+}

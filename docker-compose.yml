@@ -1,0 +1,51 @@
+version: "3"
+services:
+  app:
+    build:
+      args:
+        user: lepfsd
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - net-laravel-app
+  db:
+    image: mysql:5.7
+    container_name: laravel-app-db
+    restart: unless-stopped
+    ports:
+    - 127.0.0.1:23306:3306
+    environment:
+      MYSQL_DATABASE: laravel1
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: lepfsd
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ../laravel-app-db/var/lib/mysql:/var/lib/mysql
+    networks:
+      - net-laravel-app
+  nginx:
+    image: nginx:alpine
+    container_name: laravel-app-nginx
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:28000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - net-laravel-app
+networks:
+  net-laravel-app:
+    driver: bridge
+
+#https://codigoxules.org/docker-laravel-configuracion-e-instalacion-de-un-proyecto-con-laravel/
