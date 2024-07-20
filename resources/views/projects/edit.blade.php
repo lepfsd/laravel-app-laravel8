@@ -13,9 +13,13 @@
       <h1>editar </h1>
       <hr>
       @include('partials.validation-errors')
-      <form method="POST" action="{{ route('portfolio.update', $project) }}" class="bg-white shadow rounded py-3 px-4"> 
-        @method('PUT')
-        @include('projects._form', ['btn' => 'actualizar'])
+      <form 
+        method="POST" 
+        enctype="multipart/form-data"  
+        action="{{ route('portfolio.update', $project) }}" 
+        class="bg-white shadow rounded py-3 px-4"> 
+          @method('PUT')
+          @include('projects._form', ['btn' => 'actualizar'])
       </form>
       </div>
     </div>

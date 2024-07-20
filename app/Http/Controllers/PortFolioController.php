@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Events\ProjectSaved;
+use Illuminate\Support\Facades\Storage;
 
 class PortFolioController extends Controller
 {
@@ -46,11 +48,14 @@ class PortFolioController extends Controller
             'title' => 'required',
             'url' => ['required', 'unique:projects'],
             'description' => 'required',
+            'image' => ['required', 'image']
         ]);
         
         $project = new Project($fields);
         $project->image = $request->file('image')->store('images');
         $project->save();
+
+        ProjectSaved::dispatch($project);
 
         return redirect()->route('portfolio.index')->with('status', 'el projecto ha sido creado con exito');
     }
@@ -91,11 +96,26 @@ class PortFolioController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $project->update([
-            'title' => request('title'),
-            'url' => request('url'),
-            'description' => request('description'),
+        $fields = request()->validate([
+            'title' => 'required',
+            'url' => ['required'],
+            'description' => 'required',
+            'image' => ['required', 'image']
         ]);
+
+        if($request->hasFile('image')) {
+            Storage::delete($project->image);
+            $project->fill($fields);
+            $project->image = $request->file('image')->store('images');
+            $project->save();
+            ProjectSaved::dispatch($project);
+        } else {
+            $project->update(array_filter([
+                'title' => request('title'),
+                'url' => request('url'),
+                'description' => request('description')
+            ]));
+        }
         
         return view('projects.show', [
             'project' => $project
@@ -113,4 +133,5 @@ class PortFolioController extends Controller
         $project->delete();
         return redirect()->route('portfolio.index')->with('status', 'el projecto ha sido borrado con exito');
     }
+
 }
