@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortFolioController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
     //echo "<a href='" . route('contactos') . "'>contactos 1</a><br>";
 });
+
+
+// Example of middleware usage
+Route::get('/home_resp', [HomeController::class, 'home']);
 
 Route::get('saludo/{nombre?}', function($nombre = 'invitado'){
     return 'saludos ' . $nombre;
