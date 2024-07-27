@@ -37,6 +37,11 @@
                         <li class="nav-item {{ request()->routeIs('about') ? 'active' : ''}}"><a class="nav-link" href="{{ route('about') }}">about</a></li>
                         <li class="nav-item {{ request()->routeIs('contact') ? 'active' : ''}}"><a class="nav-link" href="{{ route('contact') }}">contact</a></li>
                         <li class="nav-item {{ request()->routeIs('portfolio') ? 'active' : ''}}"><a class="nav-link" href="{{ route('portfolio.index') }}">portfolio</a></li>
+                        <li class="nav-item {{ request()->routeIs('messages.index') ? 'active' : ''}}"><a class="nav-link" href="{{ route('messages.index') }}">messages</a></li>
+                        @if(@auth()->user()->role == 'admin')
+                            <li class="nav-item {{ request()->routeIs('users') ? 'active' : ''}}"><a class="nav-link" href="{{ route('users.index') }}">users</a></li>
+                        @endif
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -70,6 +75,12 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    <ul class="dropdown-menu">
+                                        <li class="item"><a class="text-decoration-none" href="#">Home</a></li>
+                                        <li class="item" ><a href="#">Portfolio</a></li>
+                                        <li class="item" ><a class="text-decoration-none" href="#">About</a></li>
+                                        <li class="item" ><a class="text-decoration-none" href="#">Contact</a></li>
+                                    </ul>
                                 </div>
                             </li>
                         @endguest

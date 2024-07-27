@@ -5,6 +5,7 @@ use App\Http\Controllers\PortFolioController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,11 @@ Route::view('/contact', 'contact')->name('contact');
 Route::resource('portfolio', PortFolioController::class)
     ->parameters(['portfolio' => 'project']);
 
+Route::resource('users', UsersController::class)
+->parameters(['users' => 'users']);
+
 Route::post('/contact', [MessagesController::class, 'store'])->name('contact');
+Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 Auth::routes();
