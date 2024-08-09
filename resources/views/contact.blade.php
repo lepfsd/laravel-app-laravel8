@@ -13,8 +13,8 @@
         <form method="POST" action="{{ route('contact') }}" class="bg-white shadow rounded py-3 px-4">
           @csrf
           <div class="form-group">
-            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Nombre..." value="{{ old('name') }}">
-            @error('name')
+            <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" placeholder="Nombre..." value="{{ old('nombre') }}">
+            @error('nombre')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
               </span>
@@ -37,8 +37,8 @@
             @enderror
           </div>
           <div class="form-group">
-            <textarea name="content" class="form-control @error('content') is-invalid @enderror" placeholder="mensaje...">{{ old('content') }}</textarea><br>
-            @error('content')
+            <textarea name="mensaje" class="form-control @error('mensaje') is-invalid @enderror" placeholder="mensaje...">{{ old('mensaje') }}</textarea><br>
+            @error('mensaje')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
               </span>

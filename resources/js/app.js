@@ -13,3 +13,9 @@ require('./bootstrap');
  */
 
 require('./components/Example');
+
+
+Echo.channel('channel-messages')
+    .listen('MessageWasReceived', (e) => {
+        console.log(e);
+    });

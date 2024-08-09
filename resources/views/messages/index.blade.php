@@ -19,8 +19,8 @@
                 <tr>
                   <th scope="col">name</th>
                   <th scope="col">email</th>
-                  <th scope="col">message</th>
                   <th scope="col">created_at</th>
+                  <th scope="col">message</th>
                 </tr>
               </thead>
               <tbody>
