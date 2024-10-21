@@ -10,7 +10,7 @@
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
           <h1>messages</h1>
-          <a class="btn btn-info" href="#">crear</a><br>
+          <a class="btn btn-info" href="{{ route('contact') }}">crear</a><br>
         </div>
         <hr>
         <div class="d-flex flex-wrap justify-content-between align-items-start">
@@ -30,14 +30,22 @@
                   <td>{{ $msj->email }}</td>
                   <td>{{ $msj->created_at->format('d-m-Y') }}</td>
                   <td>{{ $msj->mensaje }}</td>
+                  <td>
+                  <a href="#" onclick="document.getElementById('delete-project')" class="btn btn-danger">eliminar</a>
+                    <form 
+                      id="delete-project"
+                      method="DELETE" 
+                      action="{{ route('contact.destroy', ['id' => $msj->id]) }}" 
+                      class="d-none">
+                        @csrf @method('DELETE')
+                    </form>
+                  </td>
                 </tr>
               @empty
                 <li class="list-group-item border-0">no hay mensajes para mostrar</li>
               @endforelse
               </tbody>
             </table>
-          
-            
         </div>
         <nav>{{ $messages->links() }}</nav>
       </div>

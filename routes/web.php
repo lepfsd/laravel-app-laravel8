@@ -23,6 +23,11 @@ Route::get('/', function () {
     //echo "<a href='" . route('contactos') . "'>contactos 1</a><br>";
 });
 
+Route::get('job', function(){
+    dispatch(new App\Jobs\SendEmail);
+    return "listo";
+});
+
 
 // Example of middleware usage
 Route::get('/home_resp', [HomeController::class, 'home']);
@@ -47,6 +52,7 @@ Route::resource('users', UsersController::class)
 
 Route::post('/contact', [MessagesController::class, 'store'])->name('contact');
 Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
+Route::delete('/contact/{id}', [MessagesController::class, 'destroy'])->name('contact.destroy');
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 Auth::routes();

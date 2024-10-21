@@ -23,7 +23,7 @@
             <div class="btn-group">
               <a href="{{ route('portfolio.index') }}" class="btn btn-link">atras</a>
               <a href="{{ route('portfolio.edit', $project) }}" class="btn btn-warning">editar</a>
-              <a href="#" onclick="documment.getElementById('delete-project')" class="btn btn-danger">eliminar</a>
+              <a href="#" onclick="document.getElementById('delete-project')" class="btn btn-danger">eliminar</a>
               <form 
                 id="delete-project"
                 method="POST" 
